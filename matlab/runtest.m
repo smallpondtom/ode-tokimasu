@@ -5,16 +5,20 @@ addpath("exampleODE\");
 addpath("unmodified\");
 addpath("modified\")
 
-% Setting
+% !!! CHANGE THESE VALUES FOR EACH SPECIFIC TEST !!!
 %tspan = linspace(0,30,10000);  % fixed stepsize
-tspan = [0,20];  % adaptive stepsize
-ic = [1,-8];
+tspan = [-0.1,0.1];  % adaptive stepsize
+
+epsilon = 1e-6;
+ic = [-0.1/(epsilon + 0.01)^0.5,epsilon / (epsilon + 0.01)^0.5];
+% --------------------------------------------------
+
 atol = 1e-10;
 rtol = 1e-8;
 
 % Simulate
-[t, ys] = DOPRI54(@test05,tspan,ic,atol,rtol);  % ode solver
-ye = exactSol05(t);  % exact solution
+[t, ys] = DOPRI54(@test12,tspan,ic,atol,rtol);  % ode solver
+ye = exactSol12(t);  % exact solution (choose the # same as test #)
 
 % Reshape result array thin matrix/column vector
 if length(ys(1,:)) > 20  % 20 is an arbitrary number to detect fat matrix
