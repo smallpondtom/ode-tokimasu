@@ -1,0 +1,201 @@
+% --------------------------------------------------------- %
+% Readme.txt                                                %
+%                                                           %
+% List of the examples used to test dop54 and dop853        %
+%                                                           %
+% Denis Bichsel                                             %
+% 58 Rue des Deurres                                        %
+% 2000 Neuchâtel                                            %
+% Tel. 41 (0) 32 730 10 16                                  %
+% email: dbichsel@infomaniak.ch                             %
+% --------------------------------------------------------- %
+% The functions dop54.m, dop853.m  are Matlab versions of 
+% the Fortran codes dopri5.f dopri853.f 
+% dop54d is the Matlab version of retard.f which is the 
+% delay version of dopri5.f.
+% dop853.m is the delay version of dop853.m
+% radau.m is the adaptation of radau.f
+% The fortran code were written by:
+% E. Hairer and G. Wanner
+% Université de Genève.
+% % ------------------------------------------------------- %
+% The options for dop54 and dop853 can be set with dopset
+% and read with dopget.
+% These function are very similar to Matalb function ode45, 
+% odeset and odeget.
+% 
+% The following Matlab options for odexxxx are NOT implemented here:
+%  BDF
+%  Jacobian
+%  JConstant
+%  JPattern
+%  Vectorized
+%  MvPattern
+%  MassSingular
+%  InitialSlope
+%  MaxOrder
+%  DenseOutput
+%  DenseOutputSel
+% --------------------------------------------------------- %
+% 
+% The options in this package may be set with rdpset and 
+% get with rdpget.
+%
+% List of allowed options for all the solvers
+%
+%  General options:
+%   AbsTol:        Absolute tolerance                       {1e-6}
+%   RelTol:        Relative tolerance                       {1e-3}
+%   InitialStep:   Initial step                             {t(end) - t(1)} 
+%   MaxStep:       Maximal step                             {t(end) - t(1)}
+%   MaxNbrStep:    Maximal number of steps                  {1e5}
+%   Refine:        Number of interpolated points 
+%                  in each steps                            {1}
+%   NormControl:   See rdpset                               {false}
+%   OutputFcn:     Name or handle of a user function
+%                  for  output                              {[]}
+%   OutputSel:     Selection of y components for
+%                  the output function                      {[]}
+%   MassFcn:       Name or handle of a user function
+%                  which define the mass                    {[]}     
+%   EventsFcn:     Name or handle of a user function
+%                  which define the events                  {[]}   
+%   FacL:          Internal parameter for step size         {0.2}  
+%   FacR:          Internal parameter for step size         {8}  
+%   Safe:          Safety factor for step size selection    {0.9}
+%
+%  DOPxxxx only
+%   StiffTest:     Test for stiffness 
+%   Beta:          Parameter for stabilized step control    {0}     
+%
+%  Radau only
+%   Complex:       Allows complex calculation 
+%   NbrInd1:       Dimension of the index 1 variables       {Ny}
+%   NbrInd2:       Dimension of the index 2 variables       {0}
+%   NbrInd3:       Dimension of the index 3 variables       {0}
+%  JacRecompute:   Decides whether the jacobian should be recomputed
+%  Start_Newt:     See rdpset                               {false}
+%  MaxNbrNewton:   Max number of Newton iterations (rdpset) {7}
+%  NbrStg:         Number of stage at the beginning         {NbrStgmin}
+%  MinNbrStg:      Minimum number of stage                  {3}
+%  MaxNbrStg:      Minimum number of stage                  {7}
+%  Quot1:          Internal param. for stepsize change      {1.0}
+%  Quot2:          Internal param. for stepsize change      {1.2}
+%  Vitu:           Internal param. for stage number change  {0.0002}       
+%  Vitd:           Internal param. for stage number change  {0.8}       
+%  hhou:           See rdpset                               {1.2}
+%  hhod:                                                    {0.8}
+%  Gustafsson:     See rdpset                               {true}
+% --------------------------------------------------------- %
+%
+% List of examples:
+% ------------------
+% 
+%  DOP54, DOP853
+% 
+%  dr_Arenstorf.m             Test the convergence 
+%  dr_Ballode1.m              Test the events function
+%  dr_Ballode2.m              Test the events function
+%  dr_Ballode3.m              Test the events function
+%  dr_BrusselatorDiffusif1.m  Test for "large system" and stiffness
+%  dr_BrusselatorDiffusif2.m  Test for "large system" and stiffness
+%  dr_BrusselatorDiffusif3.m  Test for "large system" and stiffness
+%  dr_Brusselator.m
+%  Orbit.m                    In 1 file test matlab compatiblity 	
+%  dr_Orbit.m                 In 3 files (usual programming)
+%  dr_Osc.m                   Test for precision
+%  dr_OscMass.m               Test for mass function
+%  dr_Stiff.m                 Test for stiffness
+%  
+%  Nine variants of the Van der Pol problem are in the directory 
+%  "Options_ODE". Each one test an option of the solver.
+%
+%
+%  DOP54D, DOP853D
+%
+%  dr.Mass.m                  Test the mass function
+%  dr_P286.m                  Delay = cte, Phi=cte, exact solution
+%  dr_P287.m                  One equation, one cte delay, Phi(t)
+%  dr_P293.m                  One equation with parameter
+%  dr_P295.m                  Three equtions with different delay
+%  dr_P296.m                  Four equations (stability ...)
+%  dr_P297.m                  Phi is not constant
+%  dr_Test.m                  Phi is not constant exact solution
+%  dr_Wille_Backer.m          With exact solution    
+%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% --------------------------------------------------------- %
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
