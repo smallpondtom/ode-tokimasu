@@ -1,10 +1,13 @@
 import numpy as np
 from numpy.typing import NDArray 
-from typing import Optional, Any
+from typing import Callable, Optional, Any
 
 
-def rk4(derivative, t: float, h: float, x: NDArray[np.float64],
-        *params: Optional[Any]) -> tuple[float, NDArray[np.float64]]:
+ODE = Callable[[float, NDArray[np.float64], Optional[Any]], NDArray[np.float64]]
+
+
+def rk4(derivative: ODE, t: float, h: float, x: NDArray[np.float64],
+        *params: Optional[Any]) -> NDArray[np.float64]:
     """Classic Runge-Kutta 4th order method.
 
     Args:
@@ -15,7 +18,6 @@ def rk4(derivative, t: float, h: float, x: NDArray[np.float64],
         *params (any): optional arguments.
 
     Returns:
-        (float): new time
         (np.ndarray[float]): (n+1)th states
     """
 
@@ -35,8 +37,6 @@ def rk4(derivative, t: float, h: float, x: NDArray[np.float64],
     for i in range(p):
         K[:,i] = derivative(t + h*C[i], x + h*np.dot(A[i], K.T), *params).reshape(-1)
 
-    tnew = t + h
     xnew = x + h * np.dot(B, K.T)
 
-    return tnew, xnew.reshape(-1)
-
+    return xnew.reshape(-1)
