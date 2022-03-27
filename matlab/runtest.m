@@ -2,7 +2,7 @@
 clear; close all; clc;
 
 % Get user input to decide which test to run
-which_test = input("Which test would you like choose a number from 1 to 12 -> ");
+which_test = input("Which test would you like choose a number from 1 to 13 -> ");
 setup_test;
 
 % Get user input to decide which method to use
@@ -21,6 +21,7 @@ while ~flag
 end
 setup_solver;
 
+tic;
 % Simulate
 [t, ys] = solver(fs,tspan,ic,1e-10,1e-8);  % ode solver
 ye = fe(t);  % exact solution 
@@ -33,6 +34,7 @@ if length(ye(1,:)) > 20
     ye = ye';
 end
 err = abs(ye-ys);  % compute error
+toc;
 
 % Plot
 N = length(ys(1,:));

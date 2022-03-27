@@ -89,7 +89,7 @@ function [t,x,E] = RKF45(fun,tspan,x0,AbsTol,RelTol,varargin)
     end
 end
 
-function [xnp1,e] = RKF45Step(fun,fn,tn,xn,h,A,bhat,c,d,varargin)
+function [xnp1,e] = RKF45Step(fun,fn,tn,xn,h,A,b,c,d,varargin)
     X2 = xn + h*A(2,1)*fn;
     f2 = feval(fun,tn + c(2)*h,X2,varargin{:})';
     
@@ -105,7 +105,7 @@ function [xnp1,e] = RKF45Step(fun,fn,tn,xn,h,A,bhat,c,d,varargin)
     X6 = xn + h*(A(6,1)*fn + A(6,2)*f2 + A(6,3)*f3 + A(6,4)*f4 +A(6,5)*f5);
     f6 = feval(fun,tn + c(6)*h,X6,varargin{:})';
     
-    % xnp1 = xn + h*(b(1)*fn + b(3)*f3 + b(4)*f4 + b(5)*f5 + b(6)*f6);
-    xnp1 = xn + h*(bhat(1)*fn + bhat(3)*f3 + bhat(4)*f4 + bhat(5)*f5 + bhat(6)*f6);
+    xnp1 = xn + h*(b(1)*fn + b(3)*f3 + b(4)*f4 + b(5)*f5 + b(6)*f6);
+    %xnp1 = xn + h*(bhat(1)*fn + bhat(3)*f3 + bhat(4)*f4 + bhat(5)*f5 + bhat(6)*f6);
     e = h*(d(1)*fn + d(3)*f3 + d(4)*f4 + d(5)*f5 + d(6)*f6);
 end

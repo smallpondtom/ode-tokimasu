@@ -8,12 +8,12 @@ switch which_test
         fe = @exactSol01;
     case 2
         ic = [0.5];
-        tspan = [0, 10];
+        tspan = [0, 20];
         fs = @test02;
         fe = @exactSol02;
     case 3
         ic = [2;1];
-        tspan = [0,20];
+        tspan = [0,10];
         fs = @test03;
         fe = @exactSol03;
     case 4
@@ -62,6 +62,11 @@ switch which_test
         tspan = [-0.1,0.1];
         fs = @test12;
         fe = @exactSol12;
+    case 13
+        ic = [1;0.5];
+        tspan = [0,10];
+        fs = @test13;
+        fe = @exactSol13;
     otherwise
         error("Select only tests 1 to 12.");
 end

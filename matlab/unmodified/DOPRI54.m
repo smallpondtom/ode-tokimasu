@@ -82,8 +82,8 @@ function [t,x] = DOPRI54(fun,tspan,x0,AbsTol,RelTol,varargin)
                 Eold = E;
                 i = i+1;
             else
-            % New asymptotic step size
-            h = h*(epsilon/E)^(1/(p+1));
+                % New asymptotic step size
+                h = h*(epsilon/E)^(1/(p+1));
             end
         end
     end

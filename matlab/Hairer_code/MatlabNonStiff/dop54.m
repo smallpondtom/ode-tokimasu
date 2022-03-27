@@ -643,29 +643,31 @@ while ~Done
       OdeFcnArg = [OdeFcnArg,{varargin{:}}];
     end 
     f0 = feval(OdeFcnArg{:});
-    if any(isnan(f0))
-      error([Solver_Name, ': Some components of f0 = OdeFcn are NAN'])       
-    end
-    if MassExist                % There is a Mass
-      if MassArgNbr > 0
-        switch MassArgNbr
-          case 1
-            MassFcnArg = {MassFcn,time};
-          case 2
-            MassFcnArg = {MassFcn,time,y1(:,j)};
-          otherwise
-            MassFcnArg = {MassFcn,time,y1(:,j),varargin{:}};
-        end
-        Mass = feval(MassFcnArg{:}); 
-        if any(isnan(Mass))
-          error([Solver_Name, ': Some components of Mass are NAN'])       
-        end
-      end             
-      K(:,j) = Mass \ f0; 
-    else        
-      K(:,j) = f0;
-    end              
-  end;
+
+%     if any(isnan(f0))
+%       error([Solver_Name, ': Some components of f0 = OdeFcn are NAN'])       
+%     end
+%     if MassExist                % There is a Mass
+%       if MassArgNbr > 0
+%         switch MassArgNbr
+%           case 1
+%             MassFcnArg = {MassFcn,time};
+%           case 2
+%             MassFcnArg = {MassFcn,time,y1(:,j)};
+%           otherwise
+%             MassFcnArg = {MassFcn,time,y1(:,j),varargin{:}};
+%         end
+%         Mass = feval(MassFcnArg{:}); 
+%         if any(isnan(Mass))
+%           error([Solver_Name, ': Some components of Mass are NAN'])       
+%         end
+%       end             
+%       K(:,j) = Mass \ f0; 
+%     else        
+%       K(:,j) = f0;
+%     end         
+
+  end
   
   ySti = y1(:,6);  
   % K2 in Hairer fortran -->  K(:,7)
