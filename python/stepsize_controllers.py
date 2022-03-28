@@ -39,7 +39,7 @@ METHODS = [
 
 def ssc(E: List[float], H: List[float], a: float, b: float, c: float, d: float,
         e: float, epsilon: float = 0.8) -> float:
-    sf = 0.95  # safety factor
+    sf = 0.9  # safety factor
     eta = sf * ((epsilon/E[2])**a * (E[1]/epsilon)**b * (epsilon/E[0])**c
            * (H[2]/H[1])**d * (H[1]/H[0])**e)
 
@@ -109,7 +109,7 @@ def Ho110SSC(err2: float, p: int, epsilon: float = 0.8) -> float:
     Returns:
         (float): optimized stepsize scale
     """
-    sf = 0.95  # safety factor
+    sf = 0.9  # safety factor
     eta = sf * (epsilon / err2)**(1/(p+1))
 
     return eta
