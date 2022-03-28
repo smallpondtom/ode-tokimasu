@@ -87,7 +87,7 @@ class NumInt:
     def __init__(self, derivative: ODE, h: float, 
                  tspan: Union[NDArray[Any], List[Any]],
                  IC: Union[NDArray[Any], List[Any]],
-                 Atol: float = 1e-8, Rtol: float = 1e-5,
+                 Atol: float = 1e-10, Rtol: float = 1e-8,
                  method: str = "RKF45", stepsizeControl: str = "PISSC"):
         self.h = h
         self.tspan = tspan
