@@ -36,13 +36,17 @@ import numpy as np
 from numpy.typing import NDArray
 from typing import Optional, Any, Union, Callable, Tuple, List
 
-ODE = Union[                                            
-    Callable[[float, NDArray[Any], Optional[Any]],      
+
+ODE = Union[
+    Callable[[float, NDArray[Any], Optional[Any]],
              Union[NDArray[Any], NDArray[np.float64]]],
     Callable[[float, NDArray[Any]],
+             Union[NDArray[Any], NDArray[np.float64]]],
+    Callable[[float, NDArray[Any], NDArray[Any], Optional[Any]],
+             Union[NDArray[Any], NDArray[np.float64]]],
+    Callable[[float, NDArray[Any], NDArray[Any]],
              Union[NDArray[Any], NDArray[np.float64]]]
 ]
-
 
 class OdeSolver:
     """Base ODE solver class.

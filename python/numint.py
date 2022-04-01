@@ -36,17 +36,32 @@ import inspect
 import numpy as np
 from numpy.typing import NDArray
 from typing import Callable, Optional, Any, Union, List
-from ode_solver import *
-from stepsize_controllers import StepSizeControl, Ho110SSC
+try:
+    from .ode_solver import *
+except ImportError:
+    try:
+        from ode_solver import *
+    except ImportError:
+        print("Could not import ode solver.")
+try:
+    from .stepsize_controllers import StepSizeControl, Ho110SSC
+except ImportError:
+    try: 
+        from stepsize_controllers import StepSizeControl, Ho110SSC
+    except ImportError:
+        print("Could not import stepsize controllers.")
 
 
 ODE = Union[
     Callable[[float, NDArray[Any], Optional[Any]],
              Union[NDArray[Any], NDArray[np.float64]]],
     Callable[[float, NDArray[Any]],
+             Union[NDArray[Any], NDArray[np.float64]]],
+    Callable[[float, NDArray[Any], NDArray[Any], Optional[Any]],
+             Union[NDArray[Any], NDArray[np.float64]]],
+    Callable[[float, NDArray[Any], NDArray[Any]],
              Union[NDArray[Any], NDArray[np.float64]]]
 ]
-
 
 METHOD = {
     "CKRK45": CKRK45,
@@ -257,10 +272,10 @@ if __name__=="__main__":
     import time
     
     # Setup values 
-    tf = 10  # final time
+    tf = 30  # final time
     t = 0   # initial time
     ti = t
-    x = np.array([1, 0.5])  # initial conditions of states
+    x = np.array([2, 1])  # initial conditions of states
     h = 0.001  # initial stepsize
     p = 4  # order of the numerical integration
     atol = 1e-10  # absolute tolerance
@@ -268,7 +283,7 @@ if __name__=="__main__":
 
     # Store data
     exsol = []  # exact solutions
-    numint = NumInt(test1, h, [ti, tf], x, atol, rtol,
+    numint = NumInt(test3, h, [ti, tf], x, atol, rtol,
                     method="RKF45", stepsizeControl="PISSC")
     # numint = NumInt(test3, h, np.linspace(ti,tf,1000), x, atol, rtol, method="DOP54")
 
@@ -277,7 +292,7 @@ if __name__=="__main__":
     start = time.perf_counter()
     while numint.t < tf:
 
-        exsol.append(test_exactsol1(numint.t))
+        exsol.append(test_exactsol3(numint.t))
 
         # Step again flag
         step_again = True
@@ -287,7 +302,7 @@ if __name__=="__main__":
     end = time.perf_counter()
     
     # Append values for final time to exact solution and time
-    exsol.append(test_exactsol1(tf))
+    exsol.append(test_exactsol3(tf))
     
     # Convert lists to np arrays 
     T = np.array(numint.time)
