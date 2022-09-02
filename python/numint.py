@@ -277,14 +277,14 @@ if __name__=="__main__":
     ti = t
     x = np.array([2, 1])  # initial conditions of states
     h = 0.001  # initial stepsize
-    p = 4  # order of the numerical integration
+    p = 5  # order of the numerical integration
     atol = 1e-10  # absolute tolerance
     rtol = 1e-8  # relative tolerance
 
     # Store data
     exsol = []  # exact solutions
     numint = NumInt(test3, h, [ti, tf], x, atol, rtol,
-                    method="RKF45", stepsizeControl="PISSC")
+                    method="RKF45", stepsizeControl="H211SSC")
     # numint = NumInt(test3, h, np.linspace(ti,tf,1000), x, atol, rtol, method="DOP54")
 
 

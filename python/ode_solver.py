@@ -106,7 +106,7 @@ class OdeSolver:
         for i in range(self.s+1):
             self.K[i,:] = self.func(t + h*self.C[i], x + h*np.dot(self.A[i], self.K), *params)
 
-        xnew = x + h * np.dot(self.B, self.K)  
+        xnew = x + h * np.dot(self.Bhat, self.K)  
         err = h * np.dot(self.D, self.K)   
 
         return xnew.reshape(-1), err
