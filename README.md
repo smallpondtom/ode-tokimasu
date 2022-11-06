@@ -1,6 +1,18 @@
 # ode-tokimasu
 A ode solver repository in C, C++, MATLAB and Python. Courtesy of "Numerical Methods For Solution of Differential Equations" by Tobias Ritschel.
 
+# Quickstart
+1) Install 
+```
+git clone https://github.com/smallpondtom/ode-tokimasu.git
+```
+2) Install the Eigen 
+```
+git submodule init
+git submodule update
+```
+
+
 ## ToDo
 1) Implement DOP853 algorithm from Hairer.
 2) Implement ESDIRK23 algorithm (implicit method) for stiff ODEs.
