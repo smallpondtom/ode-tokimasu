@@ -9,8 +9,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_subdirectory(external/eigen)
 
-# find_package(Eigen3 REQUIRED)
-
 set(SOURCES
   src/main.cpp
 )
@@ -20,5 +18,4 @@ target_link_libraries(${PROJECT_NAME} eigen)
 target_include_directories(${PROJECT_NAME}
   PRIVATE "${PROJECT_SOURCE_DIR}/include"
 )
-
 
