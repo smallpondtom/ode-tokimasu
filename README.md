@@ -8,8 +8,17 @@ git clone https://github.com/smallpondtom/ode-tokimasu.git
 ```
 2) Install the Eigen 
 ```
+cd ode-tokimasu
 git submodule init
 git submodule update
+```
+3) Compile and build (for c++)
+```
+cd cpp
+cmake -S . -B build -G Ninja
+cd build
+ninja
+./MyOdeSolver
 ```
 
 
