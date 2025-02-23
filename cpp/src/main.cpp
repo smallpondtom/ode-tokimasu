@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
   
   // Initialize solver
   RKF45<2> rkf45(test->numerical, h, tspan);  // CHANGE HERE!!!
+
   // Setup csv file to store data
   std::ofstream results("numerical_and_exact_results.csv");
 
@@ -33,12 +34,12 @@ int main(int argc, char *argv[])
     x_e = test->exact(time);
 
     { // Data output
-      std::printf("[INFO] %8.3f : (N) ", time);
+      std::printf("[INFO] %8.3f : (NUMERICAL) ", time);
       for (int i = 0; i < x_n.size(); i++)
       {
         std::printf("%12.8e ", x_n(i));
       }
-      std::cout << " (E) ";
+      std::cout << " (EXACT) ";
       for (int i = 0; i < x_e.size(); i++)
       {
         std::printf("%12.8e ", x_e(i));
@@ -62,6 +63,6 @@ int main(int argc, char *argv[])
     rkf45.call(time, x_n);  // CHANGE HERE!!!
   } 
 
-  std::cout << "[DEBUG] Done\n";
+  std::cout << "[DEBUG] DONE\n";
   return 0; 
 }
