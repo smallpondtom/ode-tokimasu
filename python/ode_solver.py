@@ -1,13 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-___________                   _________            .___      
-\__    ___/___   _____   ____ \_   ___ \  ____   __| _/____  
-  |    | /  _ \ /     \ /  _ \/    \  \/ /  _ \ / __ |/ __ \ 
-  |    |(  <_> )  Y Y  (  <_> )     \___(  <_> ) /_/ \  ___/ 
-  |____| \____/|__|_|  /\____/ \______  /\____/\____ |\___  >
-                     \/               \/            \/    \/ 
-   
     Author: Tomoki Koike
     Contact: tkoike3@gatech.edu
     Last Edited: 03-27-2022
@@ -28,7 +21,6 @@ ___________                   _________            .___
 
         [2] T. Ritschel, “Numerical Methods For Solution of Differential 
         Equations,” p. 224.
-
 """
 
 

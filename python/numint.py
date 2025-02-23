@@ -1,13 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-___________                   _________            .___      
-\__    ___/___   _____   ____ \_   ___ \  ____   __| _/____  
-  |    | /  _ \ /     \ /  _ \/    \  \/ /  _ \ / __ |/ __ \ 
-  |    |(  <_> )  Y Y  (  <_> )     \___(  <_> ) /_/ \  ___/ 
-  |____| \____/|__|_|  /\____/ \______  /\____/\____ |\___  >
-                     \/               \/            \/    \/ 
-   
     Author: Tomoki Koike
     Contact: tkoike3@gatech.edu
     Last Edited: 03-27-2022
@@ -16,22 +9,21 @@ ___________                   _________            .___
     (2) RK4: Runge-Kutta 4th order (fixedstep)
     (3) RALS4: Ralston's (Runge-Kutta) 4th order (fixedstep)
     (4) RK42: Runge-Kutta 4th order (with half and full step)
-    (5) RKF45: Embedded Runge-Kutta Fehlberg 4(5) 
-    (6) CKRK45: Embedded Cash-Karp 4(5) 
+    (5) RKF45: Embedded Runge-Kutta Fehlberg 4(5)
+    (6) CKRK45: Embedded Cash-Karp 4(5)
     (7) DVERK65: Embedded Verner's 6(5) (unstable)
     (8) RKF78: Embeded Runge-Kutta Fehlberg 7(8) (unstable)
 
     References:
-        [1] Solving Ordinary Differential Equations I, vol. 8. Berlin, 
-        Heidelberg: Springer Berlin Heidelberg, 1993. 
+        [1] Solving Ordinary Differential Equations I, vol. 8. Berlin,
+        Heidelberg: Springer Berlin Heidelberg, 1993.
         doi: 10.1007/978-3-540-78862-1.
 
         [2] T. Ritschel, “Numerical Methods For Solution of Differential 
         Equations,” p. 224.
-
 """
 
-
+#%%
 import inspect
 import numpy as np
 from numpy.typing import NDArray
@@ -44,14 +36,14 @@ except ImportError:
     except ImportError:
         print("Could not import ode solver.")
 try:
-    from .stepsize_controllers import StepSizeControl, Ho110SSC
+    from .stepsize_controller import StepSizeControl, Ho110SSC
 except ImportError:
-    try: 
-        from stepsize_controllers import StepSizeControl, Ho110SSC
+    try:
+        from stepsize_controller import StepSizeControl, Ho110SSC
     except ImportError:
-        print("Could not import stepsize controllers.")
+        print("Could not import stepsize controllers. Check file path or name.")
 
-
+#%%
 ODE = Union[
     Callable[[float, NDArray[Any], Optional[Any]],
              Union[NDArray[Any], NDArray[np.float64]]],
@@ -63,6 +55,7 @@ ODE = Union[
              Union[NDArray[Any], NDArray[np.float64]]]
 ]
 
+#%%
 METHOD = {
     "CKRK45": CKRK45,
     "DOP54": DOP54,
@@ -96,10 +89,10 @@ SSC = [
     "PPIDSSC"
 ]
 
-
+#%%
 class NumInt:
 
-    def __init__(self, derivative: ODE, h: float, 
+    def __init__(self, derivative: ODE, h: float,
                  tspan: Union[NDArray[Any], List[Any]],
                  IC: Union[NDArray[Any], List[Any]],
                  Atol: float = 1e-10, Rtol: float = 1e-8,
@@ -143,7 +136,7 @@ class NumInt:
         self.time = [tspan[0]]
         self.soln = [IC]
 
-        # Store normalized errors and stepsizes 
+        # Store normalized errors and stepsizes
         self.Es = [1.0, 1.0, 1.0]
         self.Hs = [1.0, 1.0, h]
 
@@ -155,8 +148,6 @@ class NumInt:
         self.firststep = True
         self.secondstep = False
 
-
-    
     def __call__(self, *args: Optional[Any]) -> bool:
         """Integration with stepsize control.
 
@@ -180,13 +171,13 @@ class NumInt:
             # Update time and states
             self.t += self.h
             self.x = xnp1
-            
+
             # Append values to the data storage
             self.soln.append(xnp1)
             self.time.append(self.t)
             return False  # Do not have to rerun step since fixed stepsize
         else:  # adaptive stepsize
-            # Run the numerical integration 
+            # Run the numerical integration
             xnp1, err = self.solver(self.t, self.h, self.x, *args)
 
             # Normalized error estimate
@@ -200,7 +191,7 @@ class NumInt:
                 self.Es[0] = self.Es[1]
                 self.Es[1] = self.Es[2]
                 self.Es[2] = Enp1
-                
+
                 # Update states and time
                 self.x = xnp1
                 self.t += self.h
@@ -208,7 +199,7 @@ class NumInt:
                 # Append values to the data storage
                 self.soln.append(xnp1)
                 self.time.append(self.t)
-                
+
                 # Update stepsizes
                 if self.firststep or self.secondstep:
                     # Do this for the first two steps
@@ -219,7 +210,7 @@ class NumInt:
                 else:
                     eta = self.ssc(self.Es, self.Hs)
 
-                # Update stepsize 
+                # Update stepsize
                 self.h *= eta
                 self.Hs[0] = self.Hs[1]
                 self.Hs[1] = self.Hs[2]
@@ -230,11 +221,9 @@ class NumInt:
                 self.h *= eta
                 return True  # Rerun step with different stepsize since E > 1
 
-
-
-if __name__=="__main__":
-
-    # Test ------------------------------------------------------------------------
+#%%
+if __name__ == "__main__":
+    # Test --------------------------------------------------------------------
     def test1(t: float, y: NDArray[np.float64]) -> NDArray[Any]:
         return np.array([
             y[1],
@@ -270,8 +259,8 @@ if __name__=="__main__":
 
     import matplotlib.pyplot as plt
     import time
-    
-    # Setup values 
+
+    # Setup values
     tf = 30  # final time
     t = 0   # initial time
     ti = t
@@ -283,10 +272,13 @@ if __name__=="__main__":
 
     # Store data
     exsol = []  # exact solutions
-    numint = NumInt(test3, h, [ti, tf], x, atol, rtol,
-                    method="RKF45", stepsizeControl="H211SSC")
-    # numint = NumInt(test3, h, np.linspace(ti,tf,1000), x, atol, rtol, method="DOP54")
-
+    # numint = NumInt(
+    #     test3, h, [ti, tf], x, atol, rtol,
+    #     method="RKF45", stepsizeControl="H211SSC"
+    # )
+    numint = NumInt(
+        test3, h, np.linspace(ti, tf, 1000), x, atol, rtol, method="DOP54"
+    )
 
     # Numerical integration loop
     start = time.perf_counter()
@@ -296,26 +288,26 @@ if __name__=="__main__":
 
         # Step again flag
         step_again = True
-        
+
         while step_again:
             step_again = numint()
     end = time.perf_counter()
-    
+
     # Append values for final time to exact solution and time
     exsol.append(test_exactsol3(tf))
-    
-    # Convert lists to np arrays 
+
+    # Convert lists to np arrays
     T = np.array(numint.time)
     simsol = np.array(numint.soln)
     exsol = np.array(exsol)
 
-    print("Total data points: ", len(T)) 
+    print("Total data points: ", len(T))
     print(f"Total time elapsed: {end - start:0.6f} seconds")
 
     # Plot results
-    plt.scatter(T, simsol[:,0], label="sim", c='r')
-    plt.plot(T, exsol[:,0], label="exact")
-    plt.plot(T, np.abs(simsol[:,0] - exsol[:,0]), label="error")
+    plt.scatter(T, simsol[:, 0], label="sim", c='r')
+    plt.plot(T, exsol[:, 0], label="exact")
+    plt.plot(T, np.abs(simsol[:, 0] - exsol[:, 0]), label="error")
     plt.xlabel("t")
     plt.ylabel("x1")
     plt.legend()
@@ -324,9 +316,9 @@ if __name__=="__main__":
     plt.grid(True, which='minor', linestyle=':')
     plt.show()
 
-    plt.scatter(T, simsol[:,1], label="sim", c='r')
-    plt.plot(T, exsol[:,1], label="exact")
-    plt.plot(T, np.abs(simsol[:,1] - exsol[:,1]), label="error")
+    plt.scatter(T, simsol[:, 1], label="sim", c='r')
+    plt.plot(T, exsol[:, 1], label="exact")
+    plt.plot(T, np.abs(simsol[:, 1] - exsol[:, 1]), label="error")
     plt.xlabel("t")
     plt.ylabel("x2")
     plt.legend()
@@ -334,4 +326,4 @@ if __name__=="__main__":
     plt.minorticks_on()
     plt.grid(True, which='minor', linestyle=':')
     plt.show()
-
+#%%
