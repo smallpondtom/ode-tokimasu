@@ -264,7 +264,7 @@ if __name__ == "__main__":
     tf = 30  # final time
     t = 0   # initial time
     ti = t
-    x = np.array([2, 1])  # initial conditions of states
+    x = np.array([2.0, 1.0])  # !! initial conditions of states !!
     h = 0.001  # initial stepsize
     p = 5  # order of the numerical integration
     atol = 1e-10  # absolute tolerance
@@ -272,19 +272,22 @@ if __name__ == "__main__":
 
     # Store data
     exsol = []  # exact solutions
-    # numint = NumInt(
-    #     test3, h, [ti, tf], x, atol, rtol,
-    #     method="RKF45", stepsizeControl="H211SSC"
-    # )
+    
+    # !! Initialize numerical integration !!
     numint = NumInt(
-        test3, h, np.linspace(ti, tf, 1000), x, atol, rtol, method="DOP54"
+        test3, h, [ti, tf], x, atol, rtol,
+        method="RKF45", stepsizeControl="PISSC"
     )
+    # !! Constant stepsize !!
+    # numint = NumInt(
+    #     test3, h, np.linspace(ti, tf, 1000), x, atol, rtol, method="DOP54"
+    # )
 
     # Numerical integration loop
     start = time.perf_counter()
     while numint.t < tf:
 
-        exsol.append(test_exactsol3(numint.t))
+        exsol.append(test_exactsol3(numint.t))  # !! Change here too !!
 
         # Step again flag
         step_again = True
@@ -294,7 +297,7 @@ if __name__ == "__main__":
     end = time.perf_counter()
 
     # Append values for final time to exact solution and time
-    exsol.append(test_exactsol3(tf))
+    exsol.append(test_exactsol3(tf))  # !! Change here too !!
 
     # Convert lists to np arrays
     T = np.array(numint.time)
